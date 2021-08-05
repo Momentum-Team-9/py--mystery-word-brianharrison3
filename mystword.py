@@ -9,13 +9,14 @@ while game_start == False:
             game_start = True
 
 #getting random word
-
 with open("words.txt") as wordstxt:
     all_words = wordstxt.readlines()
-
 random_word = random.choice(all_words)      
 random_word = random_word.lower()
+random_word = list(random_word)
+#random_word = random_word.pop()
 print(random_word)
+
 print("The word has" , len(random_word) , "letters")
 
 guess_made = []
@@ -27,16 +28,12 @@ guess_made = []
 while game_start == True:
     guess = input("guess a letter ")
     guess = guess.lower()
-    
-
     if len(guess) > 1:
         print("Error, one letter only or chacter entered is not a valid")
     else:
         guess_made.append(guess)
     print("Guess made: ", guess_made)
     print("Letters in word: ", set(guess_made) & set(random_word))
-
-
 
     #stop game
     if len(guess_made) > 7:
