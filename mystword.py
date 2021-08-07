@@ -1,4 +1,5 @@
 import random
+from typing import final
 
 
 #pick mode
@@ -30,44 +31,63 @@ while game_start == False:
             random_word = random_word.lower()
 
 #random_word 
-print(random_word)
+
 print("The word has" , len(random_word) , "letters")
 guess_made = ''
+correct_letters = []
+whole_word = len(random_word) - 1
+guesses_left = 8
 # valid guesses
 valid = ["a","b", "c", "d","e" ,"f" ,"g" ,"h" ,"i" ,"j" , "k", "l", "m", "n", "o", "p", "q","r","s","t","u","v","w","x","y","z"]  
 while game_start == True:
-    count = 0
-    guesses_left = 7
+    
+    
+    
     guess = input("guess a letter ")
     guess = guess.lower()
 #guess input errors
-    if len(guess) > 1 or guess not in valid:
+    if len(guess) > 1 or guess not in valid or guess in guess_made:
         print("Error, one letter only or chacter entered is not a valid")
     else:
         guess_made += guess 
         print("Guesses made: ", guess_made)
-        print(random_word)
+        
+
         for letter in random_word:
             if letter in guess:
+                correct_letters.append(letter)
                 print("There is a", letter, "in the word")
-                count = count + 1
-                #if count == 0:
+                whole_word = whole_word - 1
+
       
         if guess not in random_word:
-            print("WRONG, be carefull you only have", guesses_left , "wrong guesses")
             guesses_left = guesses_left - 1
+            print("WRONG, be carefull you only have", guesses_left , "wrong guesses left")
         for letter in random_word:
             if letter in guess_made:
                 print(letter)
             else:
                 print("-")
 #stop game
-        print(len(random_word) - 1)
-        print(count)
+        
+        
+        print(random_word)
         if guesses_left == 0:
             print("out of guesses")
-            game_start = False
-        if (len(random_word) - 2) == count:
+            final_guess = input("Guess the word ")
+            if final_guess == random_word:
+                print("Thats it!!!, Your word was,", random_word)
+                game_start = False
+            
+            else:
+                print("Wrong!!!, your word was", random_word)
+                print(final_guess)
+                print(random_word)
+                game_start = False
+
+    
+        if len(correct_letters) == len(random_word)-1:
+            print("Good job you found the word" , random_word)
             game_start = False
     
     
